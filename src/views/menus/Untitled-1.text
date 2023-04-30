@@ -1,0 +1,95 @@
+import {CButton,CCol,CInput, CRow} from "@coreui/react";
+import React ,{useState} from "react";
+import SuccessError from "../../common/SuccessError";
+import {nullChk, validateName} from "../../common/CommonValidation";
+
+const NewMenu=()=>{
+    const[userName, setUserName] = useState("");
+    const[age, setAge] = useState("");
+    const[password, setPasword] = useState("");
+    const[phoneNumber, setPhoneNumber] = useState("");
+    const[success, setSuccess] = useState("");
+    const[error, setError] = useState("");
+
+
+    const userNameChange =(e) =>{
+        setUserName(e.target.value);
+    }
+
+    const ageChange =(e) =>{
+        setAge(e.target.value);
+    }
+
+    const passwordChange =(e) =>{
+        setPasword(e.target.value);
+    }
+
+    const phoneNumberChange =(e) =>{
+        setPhoneNumber(e.target.value);
+    }
+
+    const saveClick =() =>{
+        let errMsg=[];
+
+        if (!nullChk(userName)){
+            errMsg.push("Please fill Username");
+        }else if (!validateName(userName)){
+            errMsg.push("Please fill CharecterOnly in username field");
+        }
+
+        if (!nullChk(phoneNumber)){
+            errMsg.push("Please fill PhoneNumber");
+        }
+
+        if (!nullChk(password)){
+            errMsg.push("Please fill Password");
+        }
+
+        if (errMsg.length <= 0){
+            setSuccess(["Data Save SuccessFul"]);
+            setError([]);
+        }
+
+        console.log("UserName :",userName,"/password :",password,"/age :",age,"/phoneNumeber :",phoneNumber);
+    }
+
+    return(
+        <>
+        <SuccessError success={success} error={error}/>
+       <CRow>
+        <CCol lg="12">User Registration</CCol>
+       </CRow>
+        <br></br>
+       <CRow>
+        <CCol lg="6">
+            <CCol lg="3">UserName</CCol>
+            <CCol lg="9"><CInput type="text" value={userName} onChange={userNameChange}/></CCol>
+        </CCol>
+        <br></br>
+        <CCol lg="6">
+            <CCol lg="3">Age</CCol>
+            <CCol lg="9"><CInput type="text" value={age} onChange={ageChange}/></CCol>
+        </CCol>
+
+        <CCol lg="6">
+            <CCol lg="6">Password</CCol>
+            <CCol lg="6"><CInput type="password" value={password} onChange={passwordChange}/></CCol>
+        </CCol>
+       </CRow>
+       <br></br>
+       <CRow>
+       <CCol lg="6">
+            <CCol lg="6">PhoneNumber</CCol>
+            <CCol lg="6"><CInput type="text" value={phoneNumber} onChange={phoneNumberChange}/></CCol>
+        </CCol>
+       </CRow>
+        <br></br>
+
+        <CRow style={{justifyContent:"center"}}>
+            <CButton clasname="btn btn-secondary" value={saveClick} >Save</CButton>
+        </CRow>
+        </>
+    )
+}
+
+export default NewMenu;
